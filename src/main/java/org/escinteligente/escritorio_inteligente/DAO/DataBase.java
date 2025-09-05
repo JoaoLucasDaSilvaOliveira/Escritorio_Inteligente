@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,28 +14,11 @@ public class DataBase implements Closeable {
 
     private static DataBase instance;
 
-    private final URL dbResource;
-    private File dbFile;
-    private String url;
+    private final static Path PATH = Path.of(System.getProperty("user.dir")).resolve("src", "main", "resources", "BD.db");
+    private final static String url = "jdbc:sqlite:"+PATH;
     private Connection connection;
 
-    private DataBase (){
-        this.dbResource = DataBase.class.getClassLoader().getResource("bd/dbEscritorio.db");
-        try {
-            if (dbResource != null){
-                dbFile = new File(dbResource.toURI());
-            } else {
-                throw new RuntimeException("Path to BD not found");
-            }
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-        if (dbFile != null){
-            this.url = "jdbc:sqlite"+dbFile.getAbsolutePath();
-        } else {
-            throw new RuntimeException("BD file not found");
-        }
-    }
+    private DataBase (){}
 
     public static DataBase getInstance (){
         if (instance == null){

@@ -13,6 +13,7 @@ module org.escinteligente.escritorio_inteligente {
     requires org.seleniumhq.selenium.api;
     requires org.seleniumhq.selenium.chrome_driver;
     requires org.seleniumhq.selenium.support;
+    requires annotations;
 
     opens org.escinteligente.escritorio_inteligente to javafx.fxml;
     exports org.escinteligente.escritorio_inteligente;
